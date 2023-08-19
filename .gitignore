@@ -1,0 +1,6 @@
+build/
+.vscode/
+.cache/
+*.ini
+*.z64
+compile_commands.json
