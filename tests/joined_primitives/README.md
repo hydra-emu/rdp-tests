@@ -1,5 +1,5 @@
 ## Name
-Joined primitives test
+Joined primitives
 
 ## What this tests
 Two transparent triangles forming a rectangle

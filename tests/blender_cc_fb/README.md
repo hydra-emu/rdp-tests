@@ -1,5 +1,5 @@
 ## Name
-Simple blender test
+Simple blender
 
 ## What this tests
 Mixing color combiner output with the framebuffer

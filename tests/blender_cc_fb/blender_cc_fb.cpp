@@ -2,11 +2,9 @@
 
 int main(void)
 {
-    debug_init_isviewer();
     display_init(RESOLUTION_320x240, DEPTH_16_BPP, 3, GAMMA_NONE, ANTIALIAS_OFF);
 
     rdpq_init();
-    rdpq_debug_start();
     rdpq_set_mode_standard();
     
     // The following essentially sets the blender modes to:

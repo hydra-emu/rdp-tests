@@ -1,6 +1,8 @@
 #pragma once
 
 #include <array>
+#include <cstdint>
+#include <vector>
 #include <libdragon.h>
 
 constexpr int width = 320;
@@ -106,4 +108,15 @@ inline void tridepth_point_up(float off_x, float vert1depth, float vert2depth, f
         coeffs2.data(),
         coeffs1.data()
     );
+}
+
+inline void custom_triangle(std::vector<uint64_t> cmd)
+{
+    rspq_write_t w = rspq_write_begin(RDPQ_OVL_ID, RDPQ_CMD_TRI, cmd.size() * 2);
+    for (size_t i = 0; i < cmd.size(); i++)
+    {
+        rspq_write_arg(&w, cmd[i] >> 32);
+        rspq_write_arg(&w, cmd[i]);
+    }
+    rspq_write_end(&w);
 }
