@@ -18,6 +18,9 @@ constexpr auto color_red_transparent = my_color_t{ 1, 0, 0, 0.5 };
 constexpr auto color_green_transparent = my_color_t{ 0, 1, 0, 0.5 };
 constexpr auto color_blue_transparent = my_color_t{ 0, 0, 1, 0.5 };
 
+uint32_t* const volatile VI_ORIGIN = (uint32_t*)0xa440'0004;
+uint32_t* const volatile VI_V_CURRENT = (uint32_t*)0xa440'0010;
+
 constexpr auto color_empty = my_color_t{ 0, 0, 0, 0 };
 
 inline void trishade_point_down(float off_x, my_color_t vert1color, my_color_t vert2color, my_color_t vert3color)
