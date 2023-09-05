@@ -4,48 +4,27 @@
 int main(void)
 {
     display_init(RESOLUTION_320x240, DEPTH_16_BPP, 3, GAMMA_NONE, ANTIALIAS_OFF);
-
     rdpq_init();
-    rdpq_set_mode_standard();
-    
+
+    surface_t *screen = display_get();
+    rdpq_attach(screen, NULL);
+
+    uint64_t som =
+        SOM_TF0_RGB | SOM_TF1_RGB |
+        SOM_RGBDITHER_NONE |
+        SOM_COVERAGE_DEST_CLAMP | SOM_COLOR_ON_CVG_OVERFLOW;
     rdpq_mode_combiner(RDPQ_COMBINER_FLAT);
+    rdpq_set_prim_color(RGBA32(255, 255, 255, 255));
+    rdpq_fill_rectangle(0, 0, width, height);
+
     rdpq_mode_blender(RDPQ_BLENDER_MULTIPLY);
-    rdpq_set_prim_color(RGBA32(0, 0, 0, 255));
+    rdpq_set_other_modes_raw(som);
+    rdpq_set_prim_color(RGBA32(255, 0, 0, 128));
+    custom_triangle({0xce8003bf03bf0000, 0x013f8000fe33004f, 0x013f8000fffeaaf8, 0x013f800000000000, 0x00ff00ff00ff0088, 0x0000000000000000, 0x8000800080008000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x000000003fff01ff, 0x0000000000000000, 0x0000000000010000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, });
+    custom_triangle({0xce0003bf00000000, 0x0000000000000000, 0x013f8000fffeaaf8, 0x013f8000fe33004f, 0x00ff00ff00ff0088, 0x0000000000000000, 0x8000800080008000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x000000003fff01ff, 0x0000000000000000, 0x0000000000010000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, });
 
-    while (1) 
-    {
-        surface_t *screen = display_get();
-        rdpq_attach(screen, NULL);
+    rdpq_detach();
+    display_show(screen);
 
-        // Clear screen
-        rdpq_set_prim_color(RGBA32(0, 0, 0, 255));
-        rdpq_fill_rectangle(0, 0, width, height);
-
-        rdpq_set_prim_color(RGBA32(255, 255, 255, 128));
-        {
-            std::array<float, 6> coeffs1 = { 0, 0 };
-            std::array<float, 6> coeffs2 = { width, 0 };
-            std::array<float, 6> coeffs3 = { 0, height };
-
-            rdpq_triangle(&TRIFMT_FILL,
-                coeffs1.data(),
-                coeffs2.data(),
-                coeffs3.data()
-            );
-        }
-        {
-            std::array<float, 6> coeffs1 = { width, 0 };
-            std::array<float, 6> coeffs2 = { width, height };
-            std::array<float, 6> coeffs3 = { 0, height };
-
-            rdpq_triangle(&TRIFMT_FILL,
-                coeffs1.data(),
-                coeffs2.data(),
-                coeffs3.data()
-            );
-        }
-
-        rdpq_detach();
-        display_show(screen);
-    }
+    while (1);
 }

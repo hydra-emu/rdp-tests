@@ -1,7 +1,7 @@
 BUILD_DIR=build
 SOURCE_DIR=.
-ROM_NAME=blender_cc_fb
-N64_ROM_TITLE="Blender: CC<->FB"
+ROM_NAME=blender
+N64_ROM_TITLE="Blender"
 
 include $(N64_INST)/include/n64.mk
 N64_CXXFLAGS += -I../../include -std=c++14
